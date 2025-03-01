@@ -7,6 +7,12 @@ inputs:
   github-package-name:
     description: 'The name of the package to publish on GitHub. This must always start with your "@" GitHub username, eg. "@foobar/my-package".'
     required: true
+  npm-token:
+    description: 'The auth token to NPM.'
+    required: true
+  github-token:
+    description: 'The auth token to GitHub.'
+    required: true
 runs:
   using: "composite"
   steps:
@@ -23,7 +29,7 @@ runs:
 
     - name: Publish to NPM
       env:
-        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        NODE_AUTH_TOKEN: ${{ inputs.npm-token }}
       run: |
         npm publish
 
@@ -40,6 +46,6 @@ runs:
 
     - name: Publish to GitHub Packages
       env:
-        NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        NODE_AUTH_TOKEN: ${{ inputs.github-token }}
       run: |
         npm publish
