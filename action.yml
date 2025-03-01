@@ -1,5 +1,7 @@
 name: 'Publish to NPM and GitHub'
 description: 'Publishes an NPM package to NPM and GitHub.'
+icon: 'box'
+color: 'gray-dark'
 inputs:
   npm-package-name:
     description: 'The name of the package to publish on NPM.'
