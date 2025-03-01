@@ -18,14 +18,12 @@ runs:
   steps:
     - name: Set up NPM repository
       uses: actions/setup-node@v4
-      shell: bash
       with:
         node-version: '20.x'
         registry-url: 'https://registry.npmjs.org'
 
     - name: Set NPM package name
       uses: jaywcjlove/github-action-package@v2.0.0
-      shell: bash
       with:
         rename: ${{ inputs.npm-package-name }}
 
@@ -38,14 +36,12 @@ runs:
 
     - name: Set up GitHub repository
       uses: actions/setup-node@v4
-      shell: bash
       with:
         node-version: '20.x'
         registry-url: 'https://npm.pkg.github.com'
 
     - name: Set GitHub package name
       uses: jaywcjlove/github-action-package@v2.0.0
-      shell: bash
       with:
         rename: ${{ inputs.github-package-name }}
 
