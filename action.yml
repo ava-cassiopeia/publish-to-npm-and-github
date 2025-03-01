@@ -1,0 +1,45 @@
+name: 'Publish to NPM and GitHub'
+description: 'Publishes an NPM package to NPM and GitHub.'
+inputs:
+  npm-package-name:
+    description: 'The name of the package to publish on NPM.'
+    required: true
+  github-package-name:
+    description: 'The name of the package to publish on GitHub. This must always start with your "@" GitHub username, eg. "@foobar/my-package".'
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: Set up NPM repository
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+        registry-url: 'https://registry.npmjs.org'
+
+    - name: Set NPM package name
+      uses: jaywcjlove/github-action-package@v2.0.0
+      with:
+        rename: ${{ inputs.npm-package-name }}
+
+    - name: Publish to NPM
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      run: |
+        npm publish
+
+    - name: Set up GitHub repository
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+        registry-url: 'https://npm.pkg.github.com'
+
+    - name: Set GitHub package name
+      uses: jaywcjlove/github-action-package@v2.0.0
+      with:
+        rename: ${{ inputs.github-package-name }}
+
+    - name: Publish to GitHub Packages
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        npm publish
